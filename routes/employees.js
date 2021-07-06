@@ -1,10 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const Employee = require("../models/employees");
+const { Employee, validateEmployee } = require("../models/employees");
 
 //POST: Cria employee
-router.post("/", (req, res) => {
-  console.log(req.body.employeeName);
+router.post("/", async (req, res) => {
+  const error = await validateEmployee(req.body);
+  if (error.message) res.status(400).send(error.message);
   employee = new Employee({
     name: req.body.employeeName,
     email: req.body.employeeEmail,

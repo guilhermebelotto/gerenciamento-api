@@ -1,12 +1,11 @@
 const mongoose = require("mongoose");
+const yup = require("yup");
 
 //Employee schema
 const EmployeeSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
-    minLength: 3,
-    maxLength: 50,
   },
   email: {
     type: String,
@@ -26,4 +25,23 @@ const EmployeeSchema = new mongoose.Schema({
   },
 });
 
-module.exports = new mongoose.model("Employee", EmployeeSchema);
+const validateEmployee = (employee) => {
+  const schema = yup.object().shape({
+    employeeName: yup.string().required(),
+    employeeEmail: yup.string().required(),
+    employeeDepartment: yup.string().required(),
+    employeeSalary: yup.number().required(),
+    employeeBirth_date: yup.string().required(),
+  });
+  return schema
+    .validate(employee)
+    .then((employee) => employee)
+    .catch((error) => {
+      return {
+        message: error.message,
+      };
+    });
+};
+
+exports.Employee = new mongoose.model("Employee", EmployeeSchema);
+exports.validateEmployee = validateEmployee;
