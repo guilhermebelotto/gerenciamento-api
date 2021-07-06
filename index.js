@@ -3,8 +3,16 @@ const mongoose = require("mongoose");
 
 const app = express();
 require("dotenv").config();
+const employeesRoute = require("./routes/employees");
 
 const PORT = process.env.PORT || 3000;
+
+//middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+//routes
+app.use("/employees", employeesRoute);
 
 //conexão com mongodb
 mongoose
