@@ -12,7 +12,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 //routes
-app.use("/employees", employeesRoute);
+app.use("/", employeesRoute);
 
 //conexão com mongodb
 mongoose

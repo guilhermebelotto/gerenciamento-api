@@ -20,7 +20,7 @@ const EmployeeSchema = new mongoose.Schema({
     required: true,
   },
   birth_date: {
-    type: String,
+    type: Date,
     required: true,
   },
 });
@@ -31,7 +31,7 @@ const validateEmployee = (employee) => {
     employeeEmail: yup.string().required(),
     employeeDepartment: yup.string().required(),
     employeeSalary: yup.number().required(),
-    employeeBirth_date: yup.string().required(),
+    employeeBirth_date: yup.date().required(),
   });
   return schema
     .validate(employee)
