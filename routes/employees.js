@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const { Employee, validateEmployee } = require("../models/employees");
+const verify = require("./verifyToken");
 
 //POST: Cria employee
-router.post("/employees/", async (req, res) => {
+router.post("/employees/", verify, async (req, res) => {
   const error = await validateEmployee(req.body);
   if (error.message) res.status(400).send(error.message);
   employee = new Employee({
@@ -25,7 +26,7 @@ router.post("/employees/", async (req, res) => {
 });
 
 //Get todos os employees
-router.get("/employees/", (req, res) => {
+router.get("/employees/", verify, (req, res) => {
   Employee.find()
     .then((employees) => res.send(employees))
     .catch((error) => {
@@ -34,14 +35,14 @@ router.get("/employees/", (req, res) => {
 });
 
 //Get employee por Id
-router.get("/employees/:employeeId", async (req, res) => {
+router.get("/employees/:employeeId", verify, async (req, res) => {
   const employee = await Employee.findById(req.params.employeeId);
   if (!employee) res.status(404).send("Employee not found");
   res.send(employee);
 });
 
 //Relatório de Salários
-router.get("/reports/employees/salary", async (req, res) => {
+router.get("/reports/employees/salary", verify, async (req, res) => {
   const max = await Employee.findOne().sort({ salary: -1 });
   const min = await Employee.findOne().sort({ salary: 1 });
   const avg = await Employee.aggregate([
@@ -55,7 +56,7 @@ router.get("/reports/employees/salary", async (req, res) => {
 });
 
 //Relatório por Idade
-router.get("/reports/employees/age", async (req, res) => {
+router.get("/reports/employees/age", verify, async (req, res) => {
   const max = await Employee.findOne().sort({ birth_date: -1 });
   const min = await Employee.findOne().sort({ birth_date: 1 });
   const avg = await Employee.aggregate([
@@ -78,7 +79,7 @@ router.get("/reports/employees/age", async (req, res) => {
 });
 
 //Update por ID
-router.put("/employees/:employeeId", async (req, res) => {
+router.put("/employees/:employeeId", verify, async (req, res) => {
   const updatedEmployee = await Employee.findByIdAndUpdate(
     req.params.employeeId,
     {
@@ -95,7 +96,7 @@ router.put("/employees/:employeeId", async (req, res) => {
 });
 
 //Delete por Id
-router.delete("/employees/:employeeId", async (req, res) => {
+router.delete("/employees/:employeeId", verify, async (req, res) => {
   const employee = await Employee.findByIdAndDelete(req.params.employeeId);
   if (!employee) res.status(404).send("Employee not found");
   res.send(employee);

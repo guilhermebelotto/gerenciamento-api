@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const app = express();
 require("dotenv").config();
 const employeesRoute = require("./routes/employees");
+const authRoute = require("./routes/auth");
 
 const PORT = process.env.PORT || 3000;
 
@@ -13,7 +14,7 @@ app.use(express.urlencoded({ extended: true }));
 
 //routes
 app.use("/", employeesRoute);
-
+app.use("/user", authRoute);
 //conexão com mongodb
 mongoose
   .connect(process.env.MONGO_URL, { useNewUrlParser: true })
