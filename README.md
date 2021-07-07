@@ -1,6 +1,8 @@
 
 # gerenciamento-api
 
+O dados são armazenados na plataforma MongoDB Atlas e o deploy feito no Heroku.
+
 Será necessário utilizar uma ferramenta como POSTMAN para interagir com a api.
 
 1 - É necessário enviar uma requisição POST para: 
