@@ -1,7 +1,7 @@
 
 # gerenciamento-api
 
-O dados são armazenados na plataforma MongoDB Atlas e o deploy feito no Heroku.
+O dados são armazenados na plataforma MongoDB Atlas e o deploy feito no Heroku, o frontend não foi implementado.
 
 Será necessário utilizar uma ferramenta como POSTMAN para interagir com a api.
 
